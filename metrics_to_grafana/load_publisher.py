@@ -1,14 +1,9 @@
-"""
-Metrics to grafana
-Author: Ebad Kamil <ebad.kamil@ess.eu>
-All rights reserved.
-"""
 import argparse
 import logging
 import time
 from getpass import getuser
 
-import graphyte  # type: ignore
+import graphyte
 import psutil as ps
 
 from metrics_to_grafana.utils import get_logger

@@ -1,9 +1,3 @@
-"""
-Metrics to grafana
-Author: Ebad Kamil <ebad.kamil@ess.eu>
-All rights reserved.
-"""
-
 import logging
 
 
