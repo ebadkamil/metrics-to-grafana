@@ -23,7 +23,7 @@ To check if server is running open the graphite front-end dashboard
 * http://localhost/dashboard
 
 
-# Install and running Grafana service:
+# Installing and running Grafana service
 ### Ubuntu 20.04
 
 * Add the Grafana APT repositories to your server

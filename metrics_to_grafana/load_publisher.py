@@ -8,6 +8,8 @@ import psutil as ps
 
 from metrics_to_grafana.utils import get_logger
 
+# See https://github.com/ess-dmsc/forwarder/blob/main/forwarder/statistics_reporter.py
+
 
 class LoadPublisher:
     def __init__(
