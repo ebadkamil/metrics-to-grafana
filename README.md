@@ -23,7 +23,8 @@ To check if server is running open the graphite front-end dashboard
 * http://localhost/dashboard
 
 
-# Install and running Grafana service on Ubuntu 20.04
+# Install and running Grafana service:
+### Ubuntu 20.04
 
 * Add the Grafana APT repositories to your server
 
@@ -55,6 +56,21 @@ To check if server is running open the graphite front-end dashboard
         - By default, the login and password for Grafana is “admin”.
         - Change password when prompted.
 
+> For more information check https://grafana.com/docs/grafana/latest/installation/debian/
+### macOS
+
+Install with Homebrew
+
+    brew update
+    brew install grafana
+
+The brew page downloads and untars the files into /usr/local/Cellar/grafana/version.
+
+Start Grafana using the command:
+
+    brew services start grafana
+
+> For more information check https://grafana.com/docs/grafana/latest/installation/mac/
 # Installing the metrics publisher
 
 `metrics_to_grafana`
