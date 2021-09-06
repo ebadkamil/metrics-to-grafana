@@ -27,7 +27,6 @@ setup(
     install_requires=[
         "graphyte>=1.7.0",
         "psutil",
-        "rich>=10.6.0",
         "black==20.8b1",
         "flake8==3.8.4",
         "isort==5.7.0",
