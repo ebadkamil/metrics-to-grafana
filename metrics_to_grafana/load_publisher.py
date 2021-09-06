@@ -11,7 +11,7 @@ from getpass import getuser
 import graphyte  # type: ignore
 import psutil as ps
 
-from metrics_to_grafana.utils import get_logger, run_in_thread
+from metrics_to_grafana.utils import get_logger
 
 
 class LoadPublisher:
@@ -20,7 +20,7 @@ class LoadPublisher:
         graphyte_server: str,
         logger: logging.Logger,
         prefix: str = "machine_info",
-        update_interval_s: int = 10,
+        update_interval_s: int = 1.0,
     ):
         self._graphyte_server = graphyte_server
         self._logger = logger
@@ -28,7 +28,6 @@ class LoadPublisher:
         self._stop = False
         self._sender = graphyte.Sender(self._graphyte_server, prefix=prefix)
 
-    @run_in_thread
     def start(self):
         while not self._stop:
             timestamp = time.time()
@@ -47,8 +46,9 @@ class LoadPublisher:
 
 
 def start_load_publisher():
-    parser = argparse.ArgumentParser(prog="kafka application")
+    parser = argparse.ArgumentParser(prog="Metrics to grafana application")
     parser.add_argument(
+        "-g",
         "--grafana-carbon-address",
         required=True,
         help="<host[:port]> Address to the Grafana (Carbon) metrics server",
@@ -63,6 +63,7 @@ def start_load_publisher():
         "CRITICAL": logging.CRITICAL,
     }
     parser.add_argument(
+        "-l",
         "--log-level",
         required=False,
         help="",
@@ -77,9 +78,8 @@ def start_load_publisher():
 
     load_publisher = LoadPublisher(args.grafana_carbon_address, logger)
     try:
-        load_publisher_t = load_publisher.start()
+        load_publisher.start()
     except KeyboardInterrupt:
         logger.info(f"Interrupted by user: {getuser()}. Closing Publisher ...")
     finally:
         load_publisher.stop()
-        load_publisher_t.join()

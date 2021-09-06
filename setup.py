@@ -21,11 +21,12 @@ setup(
     packages=find_packages(),
     entry_points={
         "console_scripts": [
-            "start_load_publisher = metrics_to_grafan.load_publisher:start_load_publisher",
+            "start_load_publisher = metrics_to_grafana.load_publisher:start_load_publisher",
         ],
     },
     install_requires=[
         "graphyte>=1.7.0",
+        "psutil",
         "rich>=10.6.0",
         "black==20.8b1",
         "flake8==3.8.4",
