@@ -2,6 +2,7 @@ import argparse
 import logging
 import time
 from getpass import getuser
+from socket import gethostname
 
 import graphyte
 import psutil as ps
@@ -14,16 +15,16 @@ from metrics_to_grafana.utils import get_logger
 class LoadPublisher:
     def __init__(
         self,
-        graphyte_server: str,
+        server: str,
         logger: logging.Logger,
         prefix: str = "machine_info",
-        update_interval_s: int = 1.0,
+        update_interval: int = 1.0,
     ):
-        self._graphyte_server = graphyte_server
+        self._server = server
         self._logger = logger
-        self._update_interval_s = update_interval_s
+        self._update_interval = update_interval
         self._stop = False
-        self._sender = graphyte.Sender(self._graphyte_server, prefix=prefix)
+        self._sender = graphyte.Sender(self._server, prefix=prefix)
 
     def start(self):
         while not self._stop:
@@ -36,7 +37,7 @@ class LoadPublisher:
                 self._logger.debug(f"load {load}: memory {memory}")
             except Exception as ex:
                 self._logger.error(f"Could not send load information: {ex}")
-            time.sleep(self._update_interval_s)
+            time.sleep(self._update_interval)
 
     def stop(self):
         self._stop = True
@@ -73,7 +74,9 @@ def start_load_publisher():
 
     logger = get_logger("Metrics Publisher", level=_log_levels[args.log_level])
 
-    load_publisher = LoadPublisher(args.grafana_carbon_address, logger)
+    load_publisher = LoadPublisher(
+        args.grafana_carbon_address, logger, prefix=f"{gethostname()}.machine_info"
+    )
     try:
         load_publisher.start()
     except KeyboardInterrupt:
