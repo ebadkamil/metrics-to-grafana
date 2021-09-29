@@ -53,6 +53,13 @@ def start_load_publisher():
         type=str,
     )
 
+    parser.add_argument(
+        "-gl",
+        "--graylog-logger-address",
+        required=True,
+        help="<host[:port]> Address to the Graylog server",
+    )
+
     _log_levels = {
         "DEBUG": logging.DEBUG,
         "INFO": logging.INFO,
@@ -72,7 +79,11 @@ def start_load_publisher():
 
     args = parser.parse_args()
 
-    logger = get_logger("Metrics Publisher", level=_log_levels[args.log_level])
+    logger = get_logger(
+        "Metrics Publisher",
+        graylog_logger_address=args.graylog_logger_address,
+        level=_log_levels[args.log_level],
+    )
 
     load_publisher = LoadPublisher(
         args.grafana_carbon_address, logger, prefix=f"{gethostname()}.machine_info"
