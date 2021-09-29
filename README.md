@@ -1,26 +1,22 @@
 # metrics-to-grafana
   - Publish metrics to carbon server and visualize on Grafana
+  - Publish logs to graylog.
 
-Before publishing the metrics, we need to install graphite and grafana server on
+Before publishing the metrics and logs, we need to install graylog, graphite and grafana server on
 the local machine.
 
-# Installing and running graphite server
+# Installing and running graphite and graylog server
 
-Try Graphite in Docker and have it running in seconds.
+Use docker-compose and have it running in seconds.
 
-        docker run -d \
-        --name graphite \
-        --restart=always \
-        -p 80:80 \
-        -p 2003-2004:2003-2004 \
-        -p 2023-2024:2023-2024 \
-        -p 8125:8125/udp \
-        -p 8126:8126 \
-        graphiteapp/graphite-statsd
+        docker-compose up # in the root folder
 
-To check if server is running open the graphite front-end dashboard
+To check if servers are running
 
-* http://localhost/dashboard
+* open the graphite front-end dashboard
+  - http://localhost/dashboard
+* Open the graylog UI
+  - http://127.0.0.1:9000
 
 
 # Installing and running Grafana service

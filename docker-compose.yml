@@ -12,6 +12,7 @@ services:
     - 8126:8126
     - 2023-2024:2023-2024
 
+  # Graylog compose file from https://docs.graylog.org/en/4.0/pages/installation/docker.html
   # MongoDB: https://hub.docker.com/_/mongo/
   mongo:
     image: mongo:4.2
