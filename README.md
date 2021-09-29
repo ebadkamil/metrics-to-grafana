@@ -43,3 +43,9 @@ Usage:
         grafana-carbon-address: for eg. "localhost"
         graylog-logger-address: for eg. "localhost:12201"
         log-level: for eg. debug, info, error, warn
+
+# Configuring Graylog and Grafana.
+
+Adding Graphite as a Data Source in Grafana |  Adding GELF TCP input in Graylog
+:-------------------------:|:--------------------------------------------------:
+![](./img/grafana_data_source.png)  |  ![](./img/graylog_input.png)
