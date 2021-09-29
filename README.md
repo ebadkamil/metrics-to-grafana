@@ -1,4 +1,4 @@
-# metrics-to-grafana
+# metrics and logs to Grafana and Graylog
   - Publish metrics to carbon server and visualize on Grafana
   - Publish logs to graylog.
 

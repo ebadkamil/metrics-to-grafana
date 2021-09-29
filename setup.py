@@ -37,6 +37,7 @@ setup(
     },
     install_requires=[
         "graphyte>=1.7.0",
+        "graypy",
         "psutil",
         "black==20.8b1",
         "flake8==3.8.4",
