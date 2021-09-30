@@ -49,7 +49,7 @@ def start_load_publisher():
         "-g",
         "--grafana-carbon-address",
         required=True,
-        help="<host[:port]> Address to the Grafana (Carbon) metrics server",
+        help="<host> Address to the Grafana (Carbon) metrics server. For eg. localhost",
         type=str,
     )
 
@@ -57,7 +57,7 @@ def start_load_publisher():
         "-gl",
         "--graylog-logger-address",
         required=True,
-        help="<host[:port]> Address to the Graylog server",
+        help="<host[:port]> Address to the Graylog server. For eg. localhost:12201",
     )
 
     _log_levels = {
