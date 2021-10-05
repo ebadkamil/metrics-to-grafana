@@ -11,6 +11,14 @@ Use docker-compose and have it running in seconds.
 
         docker-compose up # in the root folder
 
+Before running the above command, make sure to stop (if any) graphite, grafana, mongodb, elasticsearch
+and graylog containers/services.
+
+        docker stop $(docker ps -a -q)
+        docker rm $(docker ps -aq)
+        docker rmi $(docker images -q)
+        sudo systemctl stop {service-name} # If any of the above services running as systemd
+
 To check if all the servers are running
 
 * open the graphite front-end dashboard
