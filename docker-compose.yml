@@ -1,5 +1,17 @@
 version: '3'
 services:
+  # metric-to-grafana
+  metric:
+    build: .
+    volumes:
+      - ./:/code
+    environment:
+      GRAFANA_ADDRESS: graphite
+      GRAYLOG_ADDRESS: graylog:12201
+      LOG_LEVEL: DEBUG
+    networks:
+      - grafana-net
+      - graylog
   # graphite
   graphite:
     image: graphiteapp/graphite-statsd
