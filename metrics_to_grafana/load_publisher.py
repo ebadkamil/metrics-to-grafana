@@ -1,9 +1,9 @@
-import argparse
 import logging
 import time
 from getpass import getuser
 from socket import gethostname
 
+import configargparse
 import graphyte
 import psutil as ps
 
@@ -44,13 +44,14 @@ class LoadPublisher:
 
 
 def start_load_publisher():
-    parser = argparse.ArgumentParser(prog="Metrics to grafana application")
+    parser = configargparse.ArgumentParser(prog="Metrics to grafana application")
     parser.add_argument(
         "-g",
         "--grafana-carbon-address",
         required=True,
         help="<host> Address to the Grafana (Carbon) metrics server. For eg. localhost",
         type=str,
+        env_var="GRAFANA_ADDRESS",
     )
 
     parser.add_argument(
@@ -58,6 +59,7 @@ def start_load_publisher():
         "--graylog-logger-address",
         required=True,
         help="<host[:port]> Address to the Graylog server. For eg. localhost:12201",
+        env_var="GRAYLOG_ADDRESS",
     )
 
     _log_levels = {
@@ -73,12 +75,21 @@ def start_load_publisher():
         required=False,
         help="",
         choices=[level.upper() for level in _log_levels.keys()],
-        type=lambda s: s.upper(),
+        type=lambda s: s.upper().strip(),
         default="INFO",
+        env_var="LOG_LEVEL",
+    )
+    parser.add_argument(
+        "-c",
+        "--config-file",
+        required=False,
+        is_config_file=True,
+        help="Read configuration from an ini file",
+        env_var="CONFIG_FILE",
     )
 
     args = parser.parse_args()
-
+    print(args.config_file)
     logger = get_logger(
         "Metrics Publisher",
         graylog_logger_address=args.graylog_logger_address,
