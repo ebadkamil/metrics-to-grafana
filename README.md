@@ -16,7 +16,7 @@ and graylog containers/services.
 
         docker stop $(docker ps -a -q)
         docker rm $(docker ps -aq)
-        docker rmi $(docker images -q)
+        docker rmi $(docker images -q) # Not required to remove already existing images.
         sudo systemctl stop {service-name} # If any of the above services running as systemd
 
 To check if all the servers are running

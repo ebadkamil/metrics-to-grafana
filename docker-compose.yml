@@ -29,6 +29,8 @@ services:
     image: mongo:4.2
     networks:
       - graylog
+    volumes:
+      - mongo_data:/data/db
   # Elasticsearch: https://www.elastic.co/guide/en/elasticsearch/reference/7.10/docker.html
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
@@ -37,6 +39,8 @@ services:
       - transport.host=localhost
       - network.host=0.0.0.0
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
     ulimits:
       memlock:
         soft: -1
@@ -61,6 +65,8 @@ services:
     networks:
       - graylog
     restart: always
+    volumes:
+      - graylog_journal:/usr/share/graylog/data/journal
     depends_on:
       - mongo
       - elasticsearch
@@ -80,3 +86,11 @@ networks:
   grafana-net:
   graylog:
     driver: bridge
+
+volumes:
+  mongo_data:
+    driver: local
+  es_data:
+    driver: local
+  graylog_journal:
+    driver: local
