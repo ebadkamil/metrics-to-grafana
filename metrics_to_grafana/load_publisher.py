@@ -5,6 +5,7 @@ from socket import gethostname
 
 import configargparse
 import graphyte
+import numpy as np
 import psutil as ps
 
 from metrics_to_grafana.utils import get_logger
@@ -34,13 +35,19 @@ class LoadPublisher:
             try:
                 self._sender.send("cpu_load", load, timestamp)
                 self._sender.send("memory", memory, timestamp)
-                self._logger.debug(f"load {load}: memory {memory}")
+                self._logger.log(self.log_level(), f"load {load}: memory {memory}")
             except Exception as ex:
                 self._logger.error(f"Could not send load information: {ex}")
             time.sleep(self._update_interval)
 
     def stop(self):
         self._stop = True
+
+    @staticmethod
+    def log_level():
+        levels = ["debug", "info", "warning", "error", "critical"]
+        level = np.random.choice(levels, p=[0.3, 0.25, 0.2, 0.15, 0.1])
+        return getattr(logging, level.upper())
 
 
 def start_load_publisher():
