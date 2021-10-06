@@ -3,8 +3,10 @@ services:
   # metric-to-grafana
   metric:
     build: .
+    container_name: metricslogs
     volumes:
       - ./:/code
+    hostname: dockerhost
     environment:
       GRAFANA_ADDRESS: graphite
       GRAYLOG_ADDRESS: graylog:12201
@@ -12,6 +14,7 @@ services:
     networks:
       - grafana-net
       - graylog
+
   # graphite
   graphite:
     image: graphiteapp/graphite-statsd
@@ -25,6 +28,9 @@ services:
     - 8125:8125/udp
     - 8126:8126
     - 2023-2024:2023-2024
+    volumes:
+      - graphite_data:/opt/graphite/storage
+
   # Grafana latest image
   grafana:
     image: grafana/grafana
@@ -34,16 +40,17 @@ services:
       - 3000:3000
     networks:
       - grafana-net
+    volumes:
+      - grafana_data:/var/lib/grafana
 
-  # Graylog compose file from https://docs.graylog.org/en/4.0/pages/installation/docker.html
-  # MongoDB: https://hub.docker.com/_/mongo/
+  # Graylog
   mongo:
     image: mongo:4.2
     networks:
       - graylog
     volumes:
       - mongo_data:/data/db
-  # Elasticsearch: https://www.elastic.co/guide/en/elasticsearch/reference/7.10/docker.html
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
     environment:
@@ -63,7 +70,7 @@ services:
           memory: 1g
     networks:
       - graylog
-  # Graylog: https://hub.docker.com/r/graylog/graylog/
+
   graylog:
     image: graylog/graylog:4.1.5
     environment:
@@ -94,12 +101,15 @@ services:
       # GELF UDP
       - 12201:12201/udp
       - 5555:5555
+
 networks:
   grafana-net:
   graylog:
     driver: bridge
 
 volumes:
+  grafana_data:
+  graphite_data:
   mongo_data:
     driver: local
   es_data:
