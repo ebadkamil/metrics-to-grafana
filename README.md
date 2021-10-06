@@ -5,7 +5,7 @@
 Before publishing the metrics and logs, we need to install graylog, graphite and grafana server on
 the local machine.
 
-# Running Graphite, Graylog and Grafana server using Docker
+# Running Publisher, Graphite, Graylog and Grafana server using Docker
 
 Use docker-compose and have it running in seconds.
 
@@ -28,6 +28,8 @@ To check if all the servers are running
 * Open Grafana web interface
   - http://localhost:3000
 
+
+> **_NOTE:_** If you wish to install metrics and log publisher as a standalone application follow the steps below.
 # Installing the metrics publisher
 
 `metrics_to_grafana`
