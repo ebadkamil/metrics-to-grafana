@@ -65,3 +65,7 @@ Usage:
 Adding Graphite as a Data Source in Grafana |  Adding GELF TCP input in Graylog
 :-------------------------:|:--------------------------------------------------:
 ![](./img/grafana_data_source.png)  |  ![](./img/graylog_input.png)
+
+# Finally create appropriate dashboards in Graylog
+
+![](./img/graylog_dashboard.png)
