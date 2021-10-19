@@ -28,7 +28,6 @@ To check if all the servers are running
 * Open Grafana web interface
   - http://localhost:3000
 
-
 > **_NOTE:_** docker-compose up will start all the services including the publisher.
 > If you intend to not launch metrics_to_grafana service do,
 
